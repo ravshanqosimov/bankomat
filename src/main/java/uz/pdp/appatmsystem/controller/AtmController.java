@@ -26,17 +26,18 @@ public class AtmController {
         ApiResponse apiResponse = atmService.addATM(atmDto, httpServletRequest);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse.getMessage());
     }
-//bankomatdagi mablag`
+
+    //bankomatdagi mablag`
     @GetMapping("/{id}")
-    public HttpEntity<?> getBalance(@RequestBody UUID id,HttpServletRequest httpServletRequest ) {
+    public HttpEntity<?> getBalance(@RequestBody UUID id, HttpServletRequest httpServletRequest) {
         ApiResponse apiResponse = atmService.balance(id, httpServletRequest);
         return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse);
     }
 
     //bankamat hisobini xodim tomonidan to`ldirish
     @PutMapping("/{id}")
-    public HttpEntity<?> create(@PathVariable UUID id, @RequestBody AtmBox dto) {
-        ApiResponse apiResponse = atmService.update(id, dto);
+    public HttpEntity<?> create(@PathVariable UUID id, @RequestBody AtmBox dto, HttpServletRequest httpServletRequest) {
+        ApiResponse apiResponse = atmService.update(id, dto, httpServletRequest);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse.getMessage());
     }
 }

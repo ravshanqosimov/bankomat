@@ -6,7 +6,7 @@ import uz.pdp.appatmsystem.payload.CardDto;
 import uz.pdp.appatmsystem.payload.TransferDto;
 
 @Service
-public class AtmServicesService {
+public class TransferService {
 
 
 

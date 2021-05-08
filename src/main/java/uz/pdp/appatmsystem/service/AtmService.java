@@ -64,13 +64,18 @@ public class AtmService {
 
     }
 
-    public ApiResponse update(UUID id, AtmBox dto) {
+    public ApiResponse update(UUID id, AtmBox dto,HttpServletRequest httpServletRequest) {
         Optional<ATM> optionalATM = atmRepository.findById(id);
         if (!optionalATM.isPresent()) return new ApiResponse("bunday bankomat topilamdi", false);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication();
-        if (!user.getRoleName().name().equals(RoleName.WORKER.name()))
-            return new ApiResponse("sizda bunday huquq mavjud " +
-                    "emas", false);
+
+        String token = httpServletRequest.getHeader("Authorization");
+        token = token.substring(7);
+        String email = jwtProvider.getEmailFromToken(token);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (!optionalUser.isPresent()) return new ApiResponse("tizimdagi userga tegishli email topilmadi", false);
+        if (!optionalUser.get().getRoleName().name().equals(RoleName.WORKER.name()))
+            return new ApiResponse("faqat direktor bankomatni qo`sha oladi", false);
         ATM atm = optionalATM.get();
         AtmBox atmBox = new AtmBox();
         atmBox.setThousand_UZS(dto.getThousand_UZS());
@@ -96,7 +101,8 @@ public class AtmService {
         Optional<ATM> optionalATM = atmRepository.findById(id);
         if (!optionalATM.isPresent()) return new ApiResponse("bunday bankomat topilamdi", false);
         User user = (User) SecurityContextHolder.getContext().getAuthentication();
-        if (!user.getRoleName().name().equals(RoleName.WORKER.name()))
+        if (!user.getRoleName().name().equals(RoleName.WORKER.name())||
+                !user.getRoleName().name().equals(RoleName.DIRECTOR.name()))
             return new ApiResponse("sizda bunday huquq mavjud " +
                     "emas", false);
         ATM atm = optionalATM.get();
