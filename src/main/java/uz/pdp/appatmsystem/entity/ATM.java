@@ -38,6 +38,7 @@ public class ATM {
 
     @OneToOne
     private  AtmBox balance;
+
     private boolean status;
 
 }

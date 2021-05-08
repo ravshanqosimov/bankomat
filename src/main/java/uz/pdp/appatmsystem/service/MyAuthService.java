@@ -10,8 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import uz.pdp.appatmsystem.entity.Card;
 import uz.pdp.appatmsystem.entity.User;
 import uz.pdp.appatmsystem.payload.ApiResponse;
+import uz.pdp.appatmsystem.payload.CardDto;
 import uz.pdp.appatmsystem.payload.LoginDto;
 import uz.pdp.appatmsystem.repository.UserRepository;
 import uz.pdp.appatmsystem.security.JwtProvider;
@@ -26,7 +28,6 @@ public class MyAuthService implements UserDetailsService {
     JwtProvider jwtProvider;
     @Autowired
     UserRepository userRepository;
-
     public ApiResponse login(LoginDto loginDto) {
         try {
             Authentication authenticate =
@@ -47,6 +48,5 @@ public class MyAuthService implements UserDetailsService {
             return optionalUser.get();
         else throw new UsernameNotFoundException(s + " topilmadi");
     }
-
 
 }

@@ -34,7 +34,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .httpBasic().disable()
                 .authorizeRequests()
-                .antMatchers(    "/api/auth/login").permitAll()
+                .antMatchers(    "/api/auth/login","/api/card/verify").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -45,6 +45,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myAuthService).passwordEncoder(passwordEncoder());
     }
+
 
     @Bean
     @Override

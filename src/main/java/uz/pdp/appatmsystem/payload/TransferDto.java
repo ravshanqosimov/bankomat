@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class TransferDto {
 
-    private Integer atmId;
-    private Integer cardId;
+    private String atmId;
+    private String cardId;
     private String cardCode;
     private Integer amount;
     private String transferType;

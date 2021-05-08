@@ -91,4 +91,16 @@ public class AtmService {
         return new ApiResponse("bankomat hisobi to`ldirildi", true);
 
     }
+
+    public ApiResponse balance(UUID id, HttpServletRequest httpServletRequest) {
+        Optional<ATM> optionalATM = atmRepository.findById(id);
+        if (!optionalATM.isPresent()) return new ApiResponse("bunday bankomat topilamdi", false);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication();
+        if (!user.getRoleName().name().equals(RoleName.WORKER.name()))
+            return new ApiResponse("sizda bunday huquq mavjud " +
+                    "emas", false);
+        ATM atm = optionalATM.get();
+        Integer balance = calculation.balance(atm.getBalance());
+        return new ApiResponse("bankomatdagi pul miqdori: ", true, balance);
+    }
 }

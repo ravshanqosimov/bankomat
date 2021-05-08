@@ -17,18 +17,26 @@ import java.util.UUID;
 public class AtmController {
     @Autowired
     AtmService atmService;
-//bankomatni ro`yxatdan o`tkazish
+
+
+    //bankomatni ro`yxatdan o`tkazish
 //    faqat direktor uchun
     @PostMapping
-    public HttpEntity<?> addATM(@RequestBody AtmDto atmDto, HttpServletRequest httpServletRequest)  {
-        ApiResponse apiResponse = atmService.addATM(atmDto,httpServletRequest);
+    public HttpEntity<?> addATM(@RequestBody AtmDto atmDto, HttpServletRequest httpServletRequest) {
+        ApiResponse apiResponse = atmService.addATM(atmDto, httpServletRequest);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse.getMessage());
+    }
+//bankomatdagi mablag`
+    @GetMapping("/{id}")
+    public HttpEntity<?> getBalance(@RequestBody UUID id,HttpServletRequest httpServletRequest ) {
+        ApiResponse apiResponse = atmService.balance(id, httpServletRequest);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse);
     }
 
     //bankamat hisobini xodim tomonidan to`ldirish
-@PutMapping("/{id}")
-public HttpEntity<?> create(@PathVariable UUID id, @RequestBody AtmBox dto) {
-    ApiResponse apiResponse = atmService.update(id, dto);
-    return ResponseEntity.status(apiResponse.isSuccess() ? 201: 409).body(apiResponse.getMessage());
-}
+    @PutMapping("/{id}")
+    public HttpEntity<?> create(@PathVariable UUID id, @RequestBody AtmBox dto) {
+        ApiResponse apiResponse = atmService.update(id, dto);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse.getMessage());
+    }
 }
