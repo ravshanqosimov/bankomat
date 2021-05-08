@@ -3,34 +3,43 @@ package uz.pdp.appatmsystem.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uz.pdp.appatmsystem.payload.ApiResponse;
 import uz.pdp.appatmsystem.payload.TransferDto;
+import uz.pdp.appatmsystem.payload.VerifyCardDto;
 import uz.pdp.appatmsystem.service.TransferService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
-@RequestMapping("/api/transfer")
+@RequestMapping("/api")
 public class TransferController {
     @Autowired
     TransferService service;
 
+    //pin kodni tekshirish
+    @PostMapping("/card/verify")
+    public HttpEntity<?>verifyCard(@RequestBody VerifyCardDto cardDto){
+
+        ApiResponse apiResponse = service.verifyCard(cardDto);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
+    }
+
+
 
     //bankamatdan pul yechish
     @PostMapping("/output")
-    public HttpEntity<?> getMoney(@RequestBody TransferDto transferDto) {
-        ApiResponse apiResponse = service.getMoney(transferDto);
+    public HttpEntity<?> getMoney(@RequestBody TransferDto transferDto, HttpServletRequest httpServletRequest) {
+        ApiResponse apiResponse = service.getMoney(transferDto,httpServletRequest);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse.getMessage());
     }
 
-    //bankamatdan pul solish
-    @PostMapping("/input")
-    public HttpEntity<?> addUser(@RequestBody TransferDto transferDto) {
-        ApiResponse apiResponse = service.getMoney(transferDto);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse.getMessage());
-    }
+    //bankamatga pul solish
+//    @PostMapping("/input")
+//    public HttpEntity<?> addUser(@RequestBody TransferDto transferDto,HttpServletRequest httpServletRequest) {
+//        ApiResponse apiResponse = service.getMoney(transferDto, httpServletRequest);
+//        return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse.getMessage());
+//    }
 
 
 }
