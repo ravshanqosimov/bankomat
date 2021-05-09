@@ -3,10 +3,13 @@ package uz.pdp.appatmsystem.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uz.pdp.appatmsystem.enums.RoleName;
 import uz.pdp.appatmsystem.enums.TransferType;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -19,19 +22,19 @@ public class Transfer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    private Card Card;
+    private String cardNumber;
+
+    private String atmSerialNumber;
 
     @ManyToOne
-    private ATM bankomat;
-
-    private double amount;
+    private AtmBox atmBox;
 
     private double commissionAmount;
 
-    private Date date;
-//ushbu field bankomatga nisbatan olinadi yani karta orqali bankomatga pul qo`shildi yoki olindi
-    private TransferType transferType;
+    private SimpleDateFormat date;
 
+    //ushbu field bankomatga nisbatan olinadi yani karta orqali bankomatga pul qo`shildi yoki yechiladi
+    private TransferType transferType;
+    private RoleName roleName;
 
 }

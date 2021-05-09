@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CardDto {
-        public String number;
+    public String number;//kartaning 16 tali nomeri
     public String password;
 
 }

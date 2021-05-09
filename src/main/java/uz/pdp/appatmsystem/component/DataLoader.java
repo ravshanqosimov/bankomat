@@ -44,10 +44,10 @@ public class DataLoader implements CommandLineRunner {
             worker.setPassword(passwordEncoder.encode("pdp"));
             worker.setRoleName(RoleName.WORKER);
             userRepository.save(worker);
-
+//test qilishga qulay bo`lishi uchun yangi kard qo`shildi va bu bankomatga kiritiladigan kard sifatida qaraladi
             Card card = new Card();
-            card.setNumber("112233");
-            card.setPassword("123");
+            card.setNumber("1111111111111111");
+            card.setPassword("1234");
             card.setBankName("XALQ");
             card.setCVVcode("");
             card.setFullName("Odilbek Saidov");

@@ -22,17 +22,20 @@ public class AtmBox {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private Integer id;
 
-    private Integer thousand_UZS = 0;
-    private Integer fiveThousand_UZS = 0;
-    private Integer tenThousand_UZS = 0;
-    private Integer fiftyThousand_UZS = 0;
-    private Integer oneHundredThousand_UZS = 0;
+    private Integer uzs_1_000 = 0;
+    private Integer uzs_5_000  = 0;
+    private Integer uzs_10_000  = 0;
+    private Integer uzs_50_000  = 0;
+    private Integer uzs_100_000  = 0;
 
-    private Integer one$ = 0;
-    private Integer five$ = 0;
-    private Integer ten$ = 0;
-    private Integer twenty$ = 0;
-    private Integer oneHundred$ = 0;
+    private Integer usd_1 = 0;
+    private Integer usd_5 = 0;
+    private Integer usd_10 = 0;
+    private Integer usd_50 = 0;
+    private Integer usd_100 = 0;
 
-    private Date date;
-}
+//    private Date date;
+
+
+    }
+

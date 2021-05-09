@@ -21,17 +21,41 @@ public class Calculation {
     }
 
     public Integer balance(AtmBox box) {
-        return 1_000 * box.getThousand_UZS() +
-                5_000 * box.getFiveThousand_UZS() +
-                10_000 * box.getTenThousand_UZS() +
-                50_000 * box.getFiftyThousand_UZS() +
-                100_000 * box.getOneHundredThousand_UZS() +
+        return 1_000 * box.getUzs_1_000() +
+                5_000 * box.getUzs_5_000() +
+                10_000 * box.getUzs_10_000() +
+                50_000 * box.getUzs_50_000() +
+                100_000 * box.getUzs_100_000() +
 
-                box.getOne$() +
-                5 * box.getFive$() +
-                10 * box.getTen$() +
-                20 * box.getTwenty$() +
-                100 * box.getOneHundred$();
+                box.getUsd_1() +
+                5 * box.getUsd_5() +
+                10 * box.getUsd_10() +
+                50 * box.getUsd_50() +
+                100 * box.getUsd_100();
 
     }
+
+    public AtmBox balanceToAtm(Integer balance, String type) {
+        AtmBox atmBox = new AtmBox();
+        if (type.equals("uzs")) {
+            atmBox.setUzs_100_000(balance / 100_000);
+            atmBox.setUzs_50_000((balance % 100_000) / 50_000);
+            atmBox.setUzs_10_000(balance % 100_000 % 50_000 / 10_000);
+            atmBox.setUzs_5_000(balance % 100_000 % 50_000 % 10_000 / 5_000);
+            atmBox.setUzs_1_000(balance % 100_000 % 50_000 % 10_000 % 5_000 / 1_000);
+            if (balance % 100_000 % 50_000 % 10_000 % 5_000 % 1_000 == 0)
+                return atmBox;
+            return null;
+        } else
+            atmBox.setUsd_100(balance / 100);
+        atmBox.setUsd_50((balance % 100) / 50);
+        atmBox.setUsd_10(balance % 100 % 50 / 10);
+        atmBox.setUsd_5(balance % 100 % 50 % 10 / 5);
+        atmBox.setUsd_1(balance % 100 % 50 % 10 % 5);
+        if (balance % 100 % 50 % 10 % 5 == 0)
+            return atmBox;
+        return null;
+    }
+
+
 }

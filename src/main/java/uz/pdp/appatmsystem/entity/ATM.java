@@ -37,7 +37,7 @@ public class ATM {
     private String address;
 
     @OneToOne
-    private  AtmBox balance;
+    private  AtmBox atmBox;//balance
 
     private boolean status;
 

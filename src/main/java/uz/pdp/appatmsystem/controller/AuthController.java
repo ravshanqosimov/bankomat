@@ -20,19 +20,4 @@ public class AuthController {
         ApiResponse apiResponse = myAuthService.login(loginDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse);
     }
-//
-//    @GetMapping("/verifyEmail")
-//    public HttpEntity<?> verifyEmail(@RequestParam String emailCode, @RequestParam String email) {
-//        ApiResponse apiResponse = myAuthService.verifyEmail(emailCode, email);
-//        return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse.getMessage());
-//
-//    }
-//
-//    @GetMapping("/verifyTask")
-//    public HttpEntity<?> verifyTask(@RequestParam String takerEmail, @RequestParam String taskName) {
-//        ApiResponse apiResponse = myAuthService.verifyTask(takerEmail, taskName);
-//        return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse.getMessage());
-//    }
-
-
 }
