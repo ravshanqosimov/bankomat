@@ -129,12 +129,15 @@ public class AtmService {
     }
 
     public ApiResponse deleteToken(HttpServletRequest httpServletRequest) {
-
-        User user = (User) SecurityContextHolder.getContext().getAuthentication();
+        String token = httpServletRequest.getHeader("Authorization");
+        token = token.substring(7);
+        String email = jwtProvider.getEmailFromToken(token);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        User user = optionalUser.get();
         if (!user.getRoleName().name().equals(RoleName.USER.name()))
             return new ApiResponse("siz bu so`rovni amalga oshira olmaysiz", false);
 
-        userRepository.deleteAllByRoleName(RoleName.USER);
+        userRepository.delete(user);
         return new ApiResponse("Tizimdan chiqdingiz. Endi tokeningiz yaroqsiz", true);
     }
 }

@@ -15,4 +15,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void deleteAllByRoleName(RoleName roleName);
 
     boolean existsByEmail(@Email String email);
+
+
+
+
 }
